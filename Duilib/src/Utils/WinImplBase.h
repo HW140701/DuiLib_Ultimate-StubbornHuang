@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 
 #ifndef WIN_IMPL_BASE_HPP
 #define WIN_IMPL_BASE_HPP
@@ -29,11 +28,12 @@ namespace DuiLib
 
 	protected:
 		virtual CDuiString GetSkinType() { return _T(""); }
+		virtual CDuiString GetSkinFolder() = 0;
 		virtual CDuiString GetSkinFile() = 0;
 		virtual LPCTSTR GetWindowClassName(void) const = 0 ;
 		virtual LPCTSTR GetManagerName() { return NULL; }
 		virtual LRESULT ResponseDefaultKeyEvent(WPARAM wParam);
-		CPaintManagerUI m_pm;
+		CPaintManagerUI m_PaintManager;
 
 	public:
 		virtual UINT GetClassStyle() const;

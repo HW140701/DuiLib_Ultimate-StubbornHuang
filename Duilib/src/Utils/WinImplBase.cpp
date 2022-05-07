@@ -10,9 +10,9 @@ namespace DuiLib
 
 	void WindowImplBase::OnFinalMessage( HWND hWnd )
 	{
-		m_pm.RemovePreMessageFilter(this);
-		m_pm.RemoveNotifier(this);
-		m_pm.ReapObjects(m_pm.GetRoot());
+		m_PaintManager.RemovePreMessageFilter(this);
+		m_PaintManager.RemoveNotifier(this);
+		m_PaintManager.ReapObjects(m_PaintManager.GetRoot());
 	}
 
 	LRESULT WindowImplBase::ResponseDefaultKeyEvent(WPARAM wParam)
@@ -146,7 +146,7 @@ namespace DuiLib
 
 		if (!::IsZoomed(*this))
 		{
-			RECT rcSizeBox = m_pm.GetSizeBox();
+			RECT rcSizeBox = m_PaintManager.GetSizeBox();
 			if (pt.y < rcClient.top + rcSizeBox.top)
 			{
 				if (pt.x < rcClient.left + rcSizeBox.left) return HTTOPLEFT;
@@ -164,7 +164,7 @@ namespace DuiLib
 			if (pt.x > rcClient.right - rcSizeBox.right) return HTRIGHT;
 		}
 
-		RECT rcCaption = m_pm.GetCaptionRect();
+		RECT rcCaption = m_PaintManager.GetCaptionRect();
 		if (0 > rcCaption.bottom)
 		{
 			rcCaption.bottom = rcClient.bottom;
@@ -173,7 +173,7 @@ namespace DuiLib
 		if (pt.x >= rcClient.left + rcCaption.left && pt.x < rcClient.right - rcCaption.right
 			&& pt.y >= rcCaption.top && pt.y < rcCaption.bottom)
 		{
-			CControlUI* pControl = m_pm.FindControl(pt);
+			CControlUI* pControl = m_PaintManager.FindControl(pt);
 			if (IsInStaticControl(pControl))
 			{
 				return HTCAPTION;
@@ -198,10 +198,10 @@ namespace DuiLib
 		lpMMI->ptMaxPosition.y	= rcWork.top;
 		lpMMI->ptMaxSize.x = rcWork.right - rcWork.left;
 		lpMMI->ptMaxSize.y = rcWork.bottom - rcWork.top;
-		lpMMI->ptMaxTrackSize.x = m_pm.GetMaxInfo().cx == 0?rcWork.right - rcWork.left:m_pm.GetMaxInfo().cx;
-		lpMMI->ptMaxTrackSize.y = m_pm.GetMaxInfo().cy == 0?rcWork.bottom - rcWork.top:m_pm.GetMaxInfo().cy;
-		lpMMI->ptMinTrackSize.x = m_pm.GetMinInfo().cx;
-		lpMMI->ptMinTrackSize.y = m_pm.GetMinInfo().cy;
+		lpMMI->ptMaxTrackSize.x = m_PaintManager.GetMaxInfo().cx == 0?rcWork.right - rcWork.left: m_PaintManager.GetMaxInfo().cx;
+		lpMMI->ptMaxTrackSize.y = m_PaintManager.GetMaxInfo().cy == 0?rcWork.bottom - rcWork.top: m_PaintManager.GetMaxInfo().cy;
+		lpMMI->ptMinTrackSize.x = m_PaintManager.GetMinInfo().cx;
+		lpMMI->ptMinTrackSize.y = m_PaintManager.GetMinInfo().cy;
 
 		bHandled = TRUE;
 		return 0;
@@ -222,7 +222,7 @@ namespace DuiLib
 
 	LRESULT WindowImplBase::OnSize(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
 	{
-		SIZE szRoundCorner = m_pm.GetRoundCorner();
+		SIZE szRoundCorner = m_PaintManager.GetRoundCorner();
 #if defined(WIN32) && !defined(UNDER_CE)
 		if( !::IsIconic(*this) ) {
 			CDuiRect rcWnd;
@@ -257,15 +257,15 @@ namespace DuiLib
 		LRESULT lRes = CWindowWnd::HandleMessage(uMsg, wParam, lParam);
 		if( ::IsZoomed(*this) != bZoomed ) {
 			if( !bZoomed ) {
-				CControlUI* pControl = static_cast<CControlUI*>(m_pm.FindControl(_T("maxbtn")));
+				CControlUI* pControl = static_cast<CControlUI*>(m_PaintManager.FindControl(_T("maxbtn")));
 				if( pControl ) pControl->SetVisible(false);
-				pControl = static_cast<CControlUI*>(m_pm.FindControl(_T("restorebtn")));
+				pControl = static_cast<CControlUI*>(m_PaintManager.FindControl(_T("restorebtn")));
 				if( pControl ) pControl->SetVisible(true);
 			}
 			else {
-				CControlUI* pControl = static_cast<CControlUI*>(m_pm.FindControl(_T("maxbtn")));
+				CControlUI* pControl = static_cast<CControlUI*>(m_PaintManager.FindControl(_T("maxbtn")));
 				if( pControl ) pControl->SetVisible(true);
-				pControl = static_cast<CControlUI*>(m_pm.FindControl(_T("restorebtn")));
+				pControl = static_cast<CControlUI*>(m_PaintManager.FindControl(_T("restorebtn")));
 				if( pControl ) pControl->SetVisible(false);
 			}
 		}
@@ -283,9 +283,17 @@ namespace DuiLib
 		::SetWindowLong(*this, GWL_STYLE, styleValue | WS_CLIPSIBLINGS | WS_CLIPCHILDREN);
 
 		// 关联UI管理器
-		m_pm.Init(m_hWnd, GetManagerName());
+		m_PaintManager.Init(m_hWnd, GetManagerName());
 		// 注册PreMessage回调
-		m_pm.AddPreMessageFilter(this);
+		m_PaintManager.AddPreMessageFilter(this);
+
+		CDuiString strResourcePath = m_PaintManager.GetResourcePath();
+		if (strResourcePath.IsEmpty())
+		{
+			strResourcePath = m_PaintManager.GetInstancePath();
+			strResourcePath += GetSkinFolder().GetData();
+		}
+		m_PaintManager.SetResourcePath(strResourcePath.GetData());
 
 		// 创建主窗口
 		CControlUI* pRoot=NULL;
@@ -293,10 +301,10 @@ namespace DuiLib
 		CDuiString sSkinType = GetSkinType();
 		if (!sSkinType.IsEmpty()) {
 			STRINGorID xml(_ttoi(GetSkinFile().GetData()));
-			pRoot = builder.Create(xml, sSkinType, this, &m_pm);
+			pRoot = builder.Create(xml, sSkinType, this, &m_PaintManager);
 		}
 		else {
-			pRoot = builder.Create(GetSkinFile().GetData(), _T(""), this, &m_pm);
+			pRoot = builder.Create(GetSkinFile().GetData(), _T(""), this, &m_PaintManager);
 		}
 
 		if (pRoot == NULL) {
@@ -306,9 +314,9 @@ namespace DuiLib
 			ExitProcess(1);
 			return 0;
 		}
-		m_pm.AttachDialog(pRoot);
+		m_PaintManager.AttachDialog(pRoot);
 		// 添加Notify事件接口
-		m_pm.AddNotifier(this);
+		m_PaintManager.AddNotifier(this);
 		// 窗口初始化完毕
 		InitWindow();
 		return 0;
@@ -384,7 +392,7 @@ namespace DuiLib
 		lRes = HandleCustomMessage(uMsg, wParam, lParam, bHandled);
 		if (bHandled) return lRes;
 
-		if (m_pm.MessageHandler(uMsg, wParam, lParam, lRes))
+		if (m_PaintManager.MessageHandler(uMsg, wParam, lParam, lRes))
 			return lRes;
 		return CWindowWnd::HandleMessage(uMsg, wParam, lParam);
 	}
