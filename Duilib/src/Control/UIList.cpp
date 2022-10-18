@@ -2402,6 +2402,7 @@ namespace DuiLib {
 				if (m_pManager != NULL)
 				{
 					m_pManager->SendNotify(this, DUI_MSGTYPE_ITEMRCLICK);
+					Select(true);
 				}
 			}
 
@@ -2951,6 +2952,7 @@ namespace DuiLib {
 				if (m_pManager != NULL)
 				{
 					m_pManager->SendNotify(this, DUI_MSGTYPE_ITEMRCLICK);
+					Select(true);
 				}
 			}
 
