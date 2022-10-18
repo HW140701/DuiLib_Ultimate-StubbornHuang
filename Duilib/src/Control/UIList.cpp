@@ -2394,6 +2394,21 @@ namespace DuiLib {
 			}
 			return;
 		}
+
+		if (event.Type == UIEVENT_RBUTTONDOWN)
+		{
+			if (IsEnabled())
+			{
+				if (m_pManager != NULL)
+				{
+					m_pManager->SendNotify(this, DUI_MSGTYPE_ITEMRCLICK);
+				}
+			}
+
+			return;
+		}
+
+
 		if (event.Type == UIEVENT_BUTTONUP)
 		{
 			if (IsEnabled()) {
@@ -2927,6 +2942,19 @@ namespace DuiLib {
 				}
 				return;
 			}
+		}
+
+		if (event.Type == UIEVENT_RBUTTONDOWN)
+		{
+			if (IsEnabled())
+			{
+				if (m_pManager != NULL)
+				{
+					m_pManager->SendNotify(this, DUI_MSGTYPE_ITEMRCLICK);
+				}
+			}
+
+			return;
 		}
 
 		if (event.Type == UIEVENT_BUTTONUP)
