@@ -207,6 +207,8 @@ namespace DuiLib {
 		CEventSource OnSize;
 		CEventSource OnEvent;
 		CEventSource OnNotify;
+		CEventSource OnPaint;
+		CEventSource OnPostPaint;
 
 	protected:
 		CPaintManagerUI* m_pManager;

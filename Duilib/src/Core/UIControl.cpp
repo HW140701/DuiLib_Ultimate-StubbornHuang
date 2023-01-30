@@ -1207,6 +1207,9 @@ namespace DuiLib {
 	{
 		if (pStopControl == this) return false;
 		if( !::IntersectRect(&m_rcPaint, &rcPaint, &m_rcItem) ) return true;
+		if (OnPaint) {
+			if (!OnPaint(this)) return true;
+		}
 		if (!DoPaint(hDC, m_rcPaint, pStopControl)) return false;
 		return true;
 	}
@@ -1342,7 +1345,7 @@ namespace DuiLib {
 
 	void CControlUI::DoPostPaint(HDC hDC, const RECT& rcPaint)
 	{
-		return;
+		if (OnPostPaint) OnPostPaint(this);
 	}
 
 	int CControlUI::GetLeftBorderSize() const
