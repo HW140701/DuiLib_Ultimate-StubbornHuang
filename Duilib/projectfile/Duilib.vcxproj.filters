@@ -176,6 +176,9 @@
     <ClCompile Include="..\src\Utils\WinImplBase.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Control\UILineChart.cpp">
+      <Filter>Control</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\StdAfx.h" />
@@ -359,6 +362,9 @@
     </ClInclude>
     <ClInclude Include="..\src\Utils\WinImplBase.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Control\UILineChart.h">
+      <Filter>Control</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

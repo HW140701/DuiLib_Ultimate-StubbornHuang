@@ -36,6 +36,7 @@
     <ClCompile Include="..\src\Control\UIIPAddress.cpp" />
     <ClCompile Include="..\src\Control\UIIPAddressEx.cpp" />
     <ClCompile Include="..\src\Control\UILabel.cpp" />
+    <ClCompile Include="..\src\Control\UILineChart.cpp" />
     <ClCompile Include="..\src\Control\UIList.cpp" />
     <ClCompile Include="..\src\Control\UIListEx.cpp" />
     <ClCompile Include="..\src\Control\UIMenu.cpp" />
@@ -93,6 +94,7 @@
     <ClInclude Include="..\src\Control\UIIPAddress.h" />
     <ClInclude Include="..\src\Control\UIIPAddressEx.h" />
     <ClInclude Include="..\src\Control\UILabel.h" />
+    <ClInclude Include="..\src\Control\UILineChart.h" />
     <ClInclude Include="..\src\Control\UIList.h" />
     <ClInclude Include="..\src\Control\UIListEx.h" />
     <ClInclude Include="..\src\Control\UIMenu.h" />
