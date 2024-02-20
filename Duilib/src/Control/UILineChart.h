@@ -8,6 +8,7 @@ using namespace Gdiplus;
 #pragma comment(lib, "gdiplus.lib")
 
 #include <vector>
+#include <map>
 
 namespace DuiLib
 {
@@ -27,25 +28,27 @@ namespace DuiLib
 
 	public:
 		void ResetChart();
-		void AddPoint(PointF point);
+		void AddCurveData(int curve_index, float value);
+		void SetCurveData(int curve_index, const std::vector<float>& curve_data);
 		void SetCurvePenColor(DWORD dwColor);
 		void SetMaxPointNum(unsigned int max_point_num);
+		void SetCurveNum(unsigned int curve_num);
+
+		int GetCurveCount();
 
 	private:
 		PointF* m_ptr_point_array;
-		std::vector<PointF> m_original_point_vector;
-		std::vector<PointF> m_result_point_vector;
 
-		RECT m_line_chart_rect;
+		std::map<int, std::vector<float>> m_original_curve_data_map;
+		std::map<int, std::vector<PointF>> m_result_curve_point_map;
 
 		DWORD m_curve_pen_color;
 
-		float min_point_x;
-		float max_point_x;
-		float min_point_y;
-		float max_point_y;
+		float min_value;
+		float max_value;
 
 		unsigned int m_max_point_num;
+		unsigned int m_curve_num;
 	};
 }
 
