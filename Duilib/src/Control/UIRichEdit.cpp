@@ -351,7 +351,7 @@ namespace DuiLib {
 		{
 #ifdef _UNICODE		
 			if(FAILED(pserv->TxSetText((TCHAR *)pcs->lpszName)))
-				goto err;
+				return FALSE;
 #else
 			size_t iLen = _tcslen(pcs->lpszName);
 			LPWSTR lpText = new WCHAR[iLen + 1];
