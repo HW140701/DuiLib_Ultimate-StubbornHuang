@@ -66,6 +66,7 @@
     <ClCompile Include="..\src\Control\UIText.cpp" />
     <ClCompile Include="..\src\Control\UITreeView.cpp" />
     <ClCompile Include="..\src\Control\UIWebBrowser.cpp" />
+    <ClCompile Include="..\src\Control\UIWnd.cpp" />
     <ClCompile Include="..\src\Core\ControlFactory.cpp" />
     <ClCompile Include="..\src\Core\UIBase.cpp" />
     <ClCompile Include="..\src\Core\UIContainer.cpp" />
@@ -124,6 +125,7 @@
     <ClInclude Include="..\src\Control\UIText.h" />
     <ClInclude Include="..\src\Control\UITreeView.h" />
     <ClInclude Include="..\src\Control\UIWebBrowser.h" />
+    <ClInclude Include="..\src\Control\UIWnd.h" />
     <ClInclude Include="..\src\Core\ControlFactory.h" />
     <ClInclude Include="..\src\Core\UIBase.h" />
     <ClInclude Include="..\src\Core\UIContainer.h" />

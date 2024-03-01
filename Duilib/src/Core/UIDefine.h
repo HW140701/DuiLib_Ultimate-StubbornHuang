@@ -313,7 +313,10 @@ protected:                                                                \
 
 #define DUI_CTR_COLORPALETTE					  (_T("ColorPalette"))
 
+#define DUI_CTR_WND                      (_T("Wnd"))
+
 #define DUI_CTR_LINECHART                      (_T("LineChart"))
+
 	///
 	//////////////END控件名称宏定义//////////////////////////////////////////////////
 

@@ -179,6 +179,9 @@
     <ClCompile Include="..\src\Control\UILineChart.cpp">
       <Filter>Control</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Control\UIWnd.cpp">
+      <Filter>Control</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\StdAfx.h" />
@@ -364,6 +367,9 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Control\UILineChart.h">
+      <Filter>Control</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Control\UIWnd.h">
       <Filter>Control</Filter>
     </ClInclude>
   </ItemGroup>

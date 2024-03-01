@@ -111,6 +111,7 @@
 #include "Control/UIHotKey.h"
 #include "Control/UIFadeButton.h"
 #include "Control/UIRing.h"
+#include "Control/UIWnd.h"
 #include "Control/UILineChart.h"
 
 #pragma comment( lib, "comctl32.lib" )
